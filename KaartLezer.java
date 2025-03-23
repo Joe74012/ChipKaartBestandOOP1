@@ -1,4 +1,5 @@
 package ChipKaartBestandOOP1;
+
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.text.SimpleDateFormat;
@@ -9,6 +10,7 @@ public class KaartLezer
 {
     public KaartLezer()
     {
+	boolean IsGeldigHoeveelheidKm = false;
 	Scanner sc = new Scanner(System.in);
 	String JaOfNee;
 	Date date = new Date();
@@ -42,6 +44,29 @@ public class KaartLezer
 	{
 	    System.out.println("Hoeveel km moet u reizen?");
 	    km = sc.nextDouble();
+	    if (km <= 0)
+	    {
+		IsGeldigHoeveelheidKm = false;
+		System.out.println("Dat is geen geldig antwoord!");
+	    }
+	    else
+	    {
+		IsGeldigHoeveelheidKm = true;
+	    }
+	    while (IsGeldigHoeveelheidKm == false)
+	    {
+		System.out.println("Hoeveel km moet u reizen?");
+		km = sc.nextDouble();
+		if (km <= 0)
+		{
+		    IsGeldigHoeveelheidKm = false;
+		    System.out.println("Dat is geen geldig antwoord!");
+		}
+		else
+		{
+		    IsGeldigHoeveelheidKm = true;
+		}
+	    }
 	    Incheck IncheckActie = new Incheck();
 	    OVChipKaart OVChipKaartActie = new OVChipKaart();
 	    IncheckActie.Inchecken(OVChipKaartActie.Bedrag, km);
@@ -50,10 +75,5 @@ public class KaartLezer
 	{
 	    System.out.println("U wilt niet inchecken of u heeft een ongeldig antwoord!");
 	}
-    }
-
-    public static void main(String[] args)
-    {
-	KaartLezer KL1 = new KaartLezer();
     }
 }
