@@ -38,17 +38,17 @@ public class KaartLezer
 	    System.out.println("Ja/Nee");
 	}
 	JaOfNee = sc.next();
-	System.out.println("Hoeveel km moet u reizen?");
-	km = sc.nextDouble();
 	if (JaOfNee.equalsIgnoreCase("Ja"))
 	{
+	    System.out.println("Hoeveel km moet u reizen?");
+	    km = sc.nextDouble();
 	    Incheck IncheckActie = new Incheck();
 	    OVChipKaart OVChipKaartActie = new OVChipKaart();
 	    IncheckActie.Inchecken(OVChipKaartActie.Bedrag, km);
 	}
 	else
 	{
-	    System.out.println("U wilt niet inchecken!");
+	    System.out.println("U wilt niet inchecken of u heeft een ongeldig antwoord!");
 	}
     }
 
