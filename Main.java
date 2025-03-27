@@ -1,11 +1,11 @@
 package ChipKaartBestandOOP1;
 
-public class Main extends KaartLezer
+public class Main
 {
 
     public static void main(String[] args)
     {
-	KaartLezer KL1 = new KaartLezer();
+	KaartLezer KaartLezer1 = new KaartLezer();
     }
 
 }

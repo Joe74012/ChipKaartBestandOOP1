@@ -5,59 +5,54 @@ import java.time.ZonedDateTime;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
+import java.text.DecimalFormat;
 
 public class KaartLezer
 {
+    private static final DecimalFormat BedragAfronding = new DecimalFormat("0.00");
+    double BasisTarief = 1.01;
+    double KostPerKm = 0.175;
+
     public KaartLezer()
     {
 	boolean IsGeldigHoeveelheidKm = false;
-	Scanner sc = new Scanner(System.in);
-	String JaOfNee;
-	Date date = new Date();
-	System.out.println(new SimpleDateFormat("HH:mm").format(date));
-	ZoneId zoneId = ZoneId.systemDefault();
-	ZonedDateTime zdt = ZonedDateTime.now(zoneId);
-	double km;
-	int uur = zdt.getHour();
-	if (uur >= 6 && uur <= 12)
+	Scanner Scanner = new Scanner(System.in);
+	String WilPersoonInchecken;
+	String WilPersoonUitchecken;
+	Date Datum = new Date();
+	System.out.println(new SimpleDateFormat("HH:mm").format(Datum));
+	ZoneId TijdPerSysteem = ZoneId.systemDefault();
+	ZonedDateTime Tijd = ZonedDateTime.now(TijdPerSysteem);
+	double HoeveelheidKmReizen;
+	int UurVanDag = Tijd.getHour();
+	OVChipKaart OVChipKaartActie = new OVChipKaart();
+	String TijdBericht = "Hallo";
+	if (OVChipKaartActie.IsIngecheckt == false)
 	{
-	    System.out.println("Goedemorgen, Wilt u inchecken?");
-	    System.out.println("Ja/Nee");
-	}
-	if (uur > 12 && uur <= 18)
-	{
-	    System.out.println("Goedemiddag, Wilt u inchecken?");
-	    System.out.println("Ja/Nee");
-	}
-	if (uur > 18 && uur <= 24)
-	{
-	    System.out.println("Goedeavond, Wilt u inchecken?");
-	    System.out.println("Ja/Nee");
-	}
-	if (uur >= 0 && uur < 6)
-	{
-	    System.out.println("Goedenacht, Wilt u inchecken?");
-	    System.out.println("Ja/Nee");
-	}
-	JaOfNee = sc.next();
-	if (JaOfNee.equalsIgnoreCase("Ja"))
-	{
-	    System.out.println("Hoeveel km moet u reizen?");
-	    km = sc.nextDouble();
-	    if (km <= 0)
+	    if (UurVanDag >= 6 && UurVanDag <= 12)
 	    {
-		IsGeldigHoeveelheidKm = false;
-		System.out.println("Dat is geen geldig antwoord!");
+		TijdBericht = "Goedemorgen";
+	    }
+	    else if (UurVanDag > 12 && UurVanDag <= 18)
+	    {
+		TijdBericht = "Goedemiddag";
+	    }
+	    else if (UurVanDag > 18 && UurVanDag <= 24)
+	    {
+		TijdBericht = "Goedeavond";
 	    }
 	    else
 	    {
-		IsGeldigHoeveelheidKm = true;
+		TijdBericht = "Goedenacht";
 	    }
-	    while (IsGeldigHoeveelheidKm == false)
+	    System.out.println(TijdBericht + ", Wilt u inchecken?");
+	    System.out.println("Ja/Nee");
+	    WilPersoonInchecken = Scanner.next();
+	    if (WilPersoonInchecken.equalsIgnoreCase("Ja"))
 	    {
 		System.out.println("Hoeveel km moet u reizen?");
-		km = sc.nextDouble();
-		if (km <= 0)
+		HoeveelheidKmReizen = Scanner.nextDouble();
+		if (HoeveelheidKmReizen <= 0)
 		{
 		    IsGeldigHoeveelheidKm = false;
 		    System.out.println("Dat is geen geldig antwoord!");
@@ -66,14 +61,98 @@ public class KaartLezer
 		{
 		    IsGeldigHoeveelheidKm = true;
 		}
+		while (IsGeldigHoeveelheidKm == false)
+		{
+		    System.out.println("Hoeveel km moet u reizen?");
+		    HoeveelheidKmReizen = Scanner.nextDouble();
+		    if (HoeveelheidKmReizen <= 0)
+		    {
+			IsGeldigHoeveelheidKm = false;
+			System.out.println("Dat is geen geldig antwoord!");
+		    }
+		    else
+		    {
+			IsGeldigHoeveelheidKm = true;
+		    }
+		}
+		Inchecken(OVChipKaartActie.Bedrag, HoeveelheidKmReizen);
+
 	    }
-	    Incheck IncheckActie = new Incheck();
-	    OVChipKaart OVChipKaartActie = new OVChipKaart();
-	    IncheckActie.Inchecken(OVChipKaartActie.Bedrag, km);
+	    else
+	    {
+		System.out.println("U wilt niet inchecken of u heeft een ongeldig antwoord!");
+	    }
 	}
 	else
 	{
-	    System.out.println("U wilt niet inchecken of u heeft een ongeldig antwoord!");
+	    // uitchecken:
+	    if (UurVanDag >= 6 && UurVanDag <= 12)
+	    {
+		TijdBericht = "Goedemorgen";
+	    }
+	    else if (UurVanDag > 12 && UurVanDag <= 18)
+	    {
+		TijdBericht = "Goedemiddag";
+	    }
+	    else if (UurVanDag > 18 && UurVanDag <= 24)
+	    {
+		TijdBericht = "Goedeavond";
+	    }
+	    else
+	    {
+		TijdBericht = "Goedenacht";
+	    }
+	    System.out.println(TijdBericht + ", Wilt u uitchecken?");
+	    System.out.println("Ja/Nee.");
+	    WilPersoonUitchecken = Scanner.next();
+	    if (WilPersoonUitchecken.equalsIgnoreCase("Ja"))
+	    {
+		if (OVChipKaartActie.IsGeldig == true)
+		{
+		    System.out.println("U bent successvol uitgecheckt!");
+		    OVChipKaartActie.IsIngecheckt = false;
+		    System.out.println("U heeft nog €" + BedragAfronding.format(OVChipKaartActie.Bedrag) + "over!");
+		}
+		else
+		{
+		    System.out.println("OV chipkaart is niet geldig!");
+		}
+
+	    }
+	    else
+	    {
+		System.out.println("U wilt niet uitchecken of u heeft een ongeldig antwoord!");
+	    }
+	}
+
+    }
+
+    public void Inchecken(double x, double y)
+    {
+	OVChipKaart OVChipKaartActie = new OVChipKaart();
+	if (OVChipKaartActie.IsGeldig == true)
+	{
+	    KostPerKm *= y;
+	    double VolBedrag = BasisTarief + KostPerKm;
+	    if (x >= VolBedrag)
+	    {
+		System.out.println("U saldo: €" + x);
+		System.out.println("U bent successvol ingecheckt!");
+		OVChipKaartActie.Bedrag -= VolBedrag;
+		OVChipKaartActie.IsIngecheckt = true;
+	    }
+	    else
+	    {
+		System.out.println("U saldo: €" + x);
+		System.out.println("U heeft niet genoeg saldo!");
+		OVChipKaartActie.IsIngecheckt = false;
+		System.out.println("Het Kost: €" + BedragAfronding.format(VolBedrag));
+	    }
+	}
+	else
+	{
+	    System.out.println("U saldo: €" + x);
+	    System.out.println("OV chipkaart is niet geldig!");
 	}
     }
 }

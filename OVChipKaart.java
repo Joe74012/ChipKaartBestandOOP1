@@ -3,6 +3,6 @@ package ChipKaartBestandOOP1;
 public class OVChipKaart
 {
     double Bedrag = 2.00;
-    boolean Geldig = true;
-    boolean IsIngechekt = false;
+    boolean IsGeldig = true;
+    boolean IsIngecheckt = false;
 }
