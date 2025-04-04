@@ -112,7 +112,7 @@ public class KaartLezer
 		}
 		OpnieuwVragen = false;
 		System.out.println(TijdBericht + ", Wilt u uitchecken?");
-		System.out.println("Ja/Nee.");
+		System.out.println("Ja/Nee");
 		WilPersoonUitchecken = Scanner.next();
 		if (WilPersoonUitchecken.equalsIgnoreCase("Ja"))
 		{
