@@ -50,10 +50,13 @@ public class KaartLezer
 	    }
 	    opnieuwVragen = false;
 	    System.out.println(tijdBericht + " " + ovChipKaartActie.naam + ".");
-	    if(ovChipKaartActie.isIngecheckt == true) {
-		 System.out.println("Typ 1 om uit te checken.");
-	    } else {
-		 System.out.println("Typ 1 om in te checken.");
+	    if (ovChipKaartActie.isIngecheckt == true)
+	    {
+		System.out.println("Typ 1 om uit te checken.");
+	    }
+	    else
+	    {
+		System.out.println("Typ 1 om in te checken.");
 	    }
 	    System.out.println("Typ 2 voor instructies.");
 	    System.out.println("Typ 3 om te opwaarderen.");
@@ -105,18 +108,26 @@ public class KaartLezer
 
 		    break;
 		case 3:
-		    System.out.println("U heeft gekozen om te opwaarderen.");
-		    System.out.println("Hoeveel geld wilt u opwaarderen?");
-		    aantalWaarderen = scanner.nextDouble();
-		    while (aantalWaarderen <= 0)
+		    if (ovChipKaartActie.isGeldig != true)
 		    {
-			System.out.println("Die waarde is ongeldig.");
-			System.out.println("U heeft gekozen om te opwaarderen.");
-			System.out.println("Hoeveel geld wilt u opwaarderen?");
-			aantalWaarderen = scanner.nextDouble();
+			System.out.println("U kunt niet opwaarderen als u kaart ongeldig is.");
 		    }
-		    ovChipKaartActie.Opwaarderen(aantalWaarderen);
-		    System.out.println("Het saldo op u kaart: €" + ovChipKaartActie.bedrag);
+		    else
+		    {
+			System.out.println("U heeft gekozen om te opwaarderen.");
+			    System.out.println("Hoeveel geld wilt u opwaarderen?");
+			    aantalWaarderen = scanner.nextDouble();
+			    while (aantalWaarderen <= 0)
+			    {
+				System.out.println("Die waarde is ongeldig.");
+				System.out.println("U heeft gekozen om te opwaarderen.");
+				System.out.println("Hoeveel geld wilt u opwaarderen?");
+				aantalWaarderen = scanner.nextDouble();
+			    }
+			    ovChipKaartActie.Opwaarderen(aantalWaarderen);
+			    System.out.println("Het saldo op u kaart: €" + ovChipKaartActie.bedrag);
+			    herhaal = 1;
+		    }
 		    herhaal = 1;
 		default:
 		    System.out.println("Die waarde is ongeldig.");

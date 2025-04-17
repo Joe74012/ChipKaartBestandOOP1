@@ -9,7 +9,7 @@ public class OVChipKaart
     int id = (int) ((Math.random() * 10000) + 1);
 
     public void Opwaarderen(double z)
-    {
+    {	
 	bedrag += z;
 	System.out.println("U heeft het geld succesvol erop gezet!");
     }
