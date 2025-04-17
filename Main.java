@@ -5,7 +5,8 @@ public class Main
 
     public static void main(String[] args)
     {
-	KaartLezer KaartLezer1 = new KaartLezer();
+	KaartLezer kaartLezer = new KaartLezer();
+	OVChipKaart kaart = new OVChipKaart();
     }
 
 }
